@@ -10,13 +10,9 @@ revenue = [] #profit or loss
 monthly_revenue_change = []
 monthly_date_change = []
 
-
 #Define variables
 total_revenue = 0
 prev_revenue = 0
-inc_revenue = 0
-dec_revenue = 0
-
 
 # Open provided csv
 csvpath = os.path.join('Resources', 'budget_data.csv')
@@ -32,7 +28,6 @@ with open(csvpath) as csvfile:
     csv_header = next(csvreader)
     # print(f"CSV Header: {csv_header}")
 
- 
     # Loop through each row of data after the header to get values
     for row in csvreader:
 
@@ -51,10 +46,15 @@ with open(csvpath) as csvfile:
         # Find the monthly change in revenue
         monthly_revenue_change = int(row[1]) - prev_revenue
         prev_revenue = int(row[1])
-        monthly_date_change = monthly_date_change + [row[0]]
-        print(monthly_revenue_change)
-        # print(monthly_date_change)
+        # print(monthly_revenue_change)
 
+        # Find the average/mean of the change in revenue
+        monthly_revenue_change_ave = sum(monthly_revenue_change) / len(monthly_revenue_change)
+        print(montly_revenue_change_ave)
+
+        # Find the monthly date change
+        monthly_date_change = monthly_date_change + [row[0]]
+        # print(monthly_date_change)
 
 # Get total number of months
 months = len(dates)
