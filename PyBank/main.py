@@ -8,15 +8,11 @@ import csv
 dates = []
 revenue = [] #profit or loss
 monthly_revenue_change = []
-monthly_date_change = []
-
 
 #Define variables
 total_revenue = 0
 max_increase_revenue = 0
-min_decrease_revenue = 0
-prev_month_revenue = 0
-
+min_increase_revenue = 0
 
 # Open provided csv
 csvpath = os.path.join('Resources', 'budget_data.csv')
@@ -60,16 +56,34 @@ monthly_revenue_change = [revenue[i + 1] - revenue[i] for i in range(0,len(reven
 average_revenue_change = (sum(monthly_revenue_change) / len(monthly_revenue_change))
 # print(average_revenue_change)
 
-# Loop to get the max values for increase and then decrease in profits
-for i in range(len(monthly_revenue_change)-1):
-    if monthly_revenue_change[i] > max_increase_revenue:
-        max_increase_revenue = monthly_revenue_change[i]
+# Find the max values for increase and then decrease in profits
+max_increase_revenue = max(monthly_revenue_change)
+min_increase_revenue = min(monthly_revenue_change)
+# print(max_increase_revenue)
+# print(min_increase_revenue)
 
-    if monthly_revenue_change[i] < min_decrease_revenue:
-        min_decrease_revenue = monthly_revenue_change[i]
+# Find the dates of the increase and decrease 
+max_month = dates[monthly_revenue_change.index(max_increase_revenue)+1]
+min_month = dates[monthly_revenue_change.index(min_increase_revenue)+1]
+# print(max_month)
+# print(min_month)
 
-print(max_increase_revenue)       
-print(min_decrease_revenue)
+# Prepare summary
+print("Financial Analysis")
+print("-------------------------------------")
+print("Total Months: " + str(months))
+print("Total: $" + str(total_revenue))
+print("Average Change: " + str(round(average_revenue_change,2)))
+print("Greatest Increase in Profits: " + str(max_month) + " " + "($" + str(max_increase_revenue) + ")")
+print("Greates Decrease in Profits: " + str(min_month) + " " + "($" + str(min_increase_revenue) + ")")
 
-# Get the min values for decrease in profits
-
+# Export to text file
+output_text = os.path.join("analysis", "FinancialAnalysis.txt")
+with open(output_text, "w") as textfile:
+    textfile.write("Financial Analysis" "\n")
+    textfile.write("-------------------------------------""\n")
+    textfile.write("Total Months: " + str(months) + "\n")
+    textfile.write("Total: $" + str(total_revenue) + "\n")
+    textfile.write("Average Change: " + str(round(average_revenue_change,2)) +"\n")
+    textfile.write("Greatest Increase in Profits: " + str(max_month) + " " + "($" + str(max_increase_revenue) + ")""\n")
+    textfile.write("Greates Decrease in Profits: " + str(min_month) + " " + "($" + str(min_increase_revenue) + ")""\n")
