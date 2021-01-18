@@ -1,8 +1,22 @@
 # financial analysis
-# ---------------------------------------------------------------
+# ---------------------
 
 import os
 import csv
+
+# Empty lists to store data
+dates = []
+revenue = [] #profit or loss
+monthly_revenue_change = []
+monthly_date_change = []
+
+
+#Define variables
+total_revenue = 0
+prev_revenue = 0
+inc_revenue = 0
+dec_revenue = 0
+
 
 # Open provided csv
 csvpath = os.path.join('Resources', 'budget_data.csv')
@@ -12,79 +26,37 @@ with open(csvpath) as csvfile:
 
     # CSV reader specifies delimiter and variable that holds contents
     csvreader = csv.reader(csvfile, delimiter=',')
+    # print(csvreader)
 
-    #print(csvreader)
-
-    # Read the header row first (skip this step if there is now header)
+    # Read the header row first (skip this step if there is no header)
     csv_header = next(csvreader)
-    print(f"CSV Header: {csv_header}")
+    # print(f"CSV Header: {csv_header}")
 
-    # Read each row of data after the header
+ 
+    # Loop through each row of data after the header to get values
     for row in csvreader:
-        print(row)
+
+        # Put dates in list
+        dates.append(row[0])
+        # print(dates)
+
+        # Put monthly profit & loss values (revenue) in list
+        revenue.append(row[1])
+        # print(revenue)
+
+        # Total the profit & loss values in the column
+        total_revenue += float(row[1])
+        # print(total_revenue)
+
+        # Find the monthly change in revenue
+        monthly_revenue_change = int(row[1]) - prev_revenue
+        prev_revenue = int(row[1])
+        monthly_date_change = monthly_date_change + [row[0]]
+        print(monthly_revenue_change)
+        # print(monthly_date_change)
 
 
-# # Create a dictionary using the built-in function.
-# actors = dict()
+# Get total number of months
+months = len(dates)
+# print(months)
 
-# # A dictionary of an actor.
-# actors = {"name": "Tom Cruise"}
-# print(f'{actors["name"]}')
-
-# # Add an actor to the dictionary with the key "name"
-# # and the value "Denzel Washington".
-# actors["name"] = "Denzel Washington"
-
-# # Print the actors dictionary.
-# print(actors)
-
-# # Print only the actor.
-# print(f'{actors["name"]}')
-
-# # A list of actors
-# actors_list = [
-#     "Tom Cruise",
-#     "Angelina Jolie",
-#     "Kristen Stewart",
-#     "Denzel Washington"]
-
-# # Overwrite the value, "Denzel Washington", with the list of actors.
-# actors["name"] = actors_list
-
-# # Print the first actor
-# print(f'{actors["name"][0]}')
-
-# # ---------------------------------------------------------------
-
-# # A dictionary can contain multiple pairs of information
-# actress = {
-#     "name": "Angelina Jolie",
-#     "genre": "Action",
-#     "nationality": "United States"
-# }
-
-# # ---------------------------------------------------------------
-
-# # A dictionary can contain multiple types of information
-# another_actor = {
-#     "name": "Sylvester Stallone",
-#     "age": 62,
-#     "married": True,
-#     "best movies": [
-#         "Rocky",
-#         "Rocky 2",
-#         "Rocky 3"]}
-# print(f'{another_actor["name"]} was in {another_actor["best movies"][0]}')
-# # ---------------------------------------------------------------
-
-# # A dictionary can even contain another dictionary
-# film = {
-#     "title": "Interstellar",
-#     "revenues": {
-#         "United States": 360,
-#         "China": 250,
-#         "United Kingdom": 73
-#     }
-# }
-# print(f'{film["title"]} made {film["revenues"]["United States"]}'" million dollars in the US.")
-# # ---------------------------------------------------------------
