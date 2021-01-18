@@ -4,15 +4,19 @@
 import os
 import csv
 
-# Empty lists to store data
+# Lists to store data
 dates = []
 revenue = [] #profit or loss
 monthly_revenue_change = []
 monthly_date_change = []
 
+
 #Define variables
 total_revenue = 0
-prev_revenue = 0
+max_increase_revenue = 0
+min_decrease_revenue = 0
+prev_month_revenue = 0
+
 
 # Open provided csv
 csvpath = os.path.join('Resources', 'budget_data.csv')
@@ -36,27 +40,36 @@ with open(csvpath) as csvfile:
         # print(dates)
 
         # Put monthly profit & loss values (revenue) in list
-        revenue.append(row[1])
-        # print(revenue)
-
-        # Total the profit & loss values in the column
-        total_revenue += float(row[1])
-        # print(total_revenue)
-
-        # Find the monthly change in revenue
-        monthly_revenue_change = int(row[1]) - prev_revenue
-        prev_revenue = int(row[1])
-        # print(monthly_revenue_change)
-
-        # Find the average/mean of the change in revenue
-        monthly_revenue_change_ave = sum(monthly_revenue_change) / len(monthly_revenue_change)
-        print(montly_revenue_change_ave)
-
-        # Find the monthly date change
-        monthly_date_change = monthly_date_change + [row[0]]
-        # print(monthly_date_change)
+        revenue.append(int(row[1]))
+        # sprint(revenue)
+        
+# Find total revenue
+total_revenue = sum(revenue)
+# print(total_revenue)
 
 # Get total number of months
+months = 0
 months = len(dates)
 # print(months)
+
+# Create list to hold values for revenue changes
+monthly_revenue_change = [revenue[i + 1] - revenue[i] for i in range(0,len(revenue)-1)]
+# print(monthly_revenue_change)
+
+# Find the average value for revenue changes
+average_revenue_change = (sum(monthly_revenue_change) / len(monthly_revenue_change))
+# print(average_revenue_change)
+
+# Loop to get the max values for increase and then decrease in profits
+for i in range(len(monthly_revenue_change)-1):
+    if monthly_revenue_change[i] > max_increase_revenue:
+        max_increase_revenue = monthly_revenue_change[i]
+
+    if monthly_revenue_change[i] < min_decrease_revenue:
+        min_decrease_revenue = monthly_revenue_change[i]
+
+print(max_increase_revenue)       
+print(min_decrease_revenue)
+
+# Get the min values for decrease in profits
 
