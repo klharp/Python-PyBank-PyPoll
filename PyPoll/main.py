@@ -8,8 +8,12 @@ import csv
 id = []
 candidates = []
 
-#Define variables
+# Dictionary to store incremental votes
+candidate_dict = {}
+
+# Define variables
 total_votes = 0
+vote_count = 1
 
 # Open provided csv
 csvpath = os.path.join('Resources', 'election_data.csv')
@@ -35,14 +39,26 @@ with open(csvpath) as csvfile:
         # Put candidates in list
         candidates.append(row[2])
         # print(candidates)
-        
+
+        # Add candidate vote counts to dictionary value
+            # candidates is the key added to empty candidate_dict
+            # vote_count is the value(s)
+        #counts the first item list as a vote
+        vote_count += 1 #vote_count = vote_count +1
+        if row[2] not in candidate_dict:
+            candidate_dict[row[2]] = 1
+        else:
+            candidate_dict[row[2]] += 1
+        candidate_dict["Kahn"] = 1   
+        # print(candidate_dict)
+              
 # Get total number of votes
 total_votes = len(id)
 # print(total_votes)
 
-# Get unique candidates
+# Get unique candidates and put in list
 candidate_name = list(set(candidates))
-print(candidate_name)
+# print(candidate_name)
 
  # need to determine votes per candidate
     # Is this done in a for loop? 
