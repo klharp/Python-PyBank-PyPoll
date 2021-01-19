@@ -1,4 +1,4 @@
-# financial analysis
+# Financial Analysis
 # ---------------------
 
 import os
