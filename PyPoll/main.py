@@ -1,4 +1,4 @@
-# Financial Analysis
+# Elections Analysis
 # ---------------------
 
 import os
@@ -43,3 +43,14 @@ total_votes = len(id)
 # Get unique candidates
 candidate_name = list(set(candidates))
 print(candidate_name)
+
+ # need to determine votes per candidate
+    # Is this done in a for loop? 
+    # Would a dictionary work better? Can put the list of the 4 candidates and return the 4 names as values?
+        #If using a dictionary, how do I loop row by row to tally the votes per candidate?
+
+#Use the info above to determine who won based on the most votes.    
+
+#Create Summary Table
+
+#Export Summary Table
