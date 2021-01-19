@@ -1,12 +1,19 @@
-# Elections Analysis
-# ---------------------
+'''
+I started this using empty lists to store id and candidate data, thinking I could loop
+through the data to get the info needed. Switched to putting the data into a dictionary 
+with the candidate as key and the vote count as the value. 
+Sought help with the dictionary part (Thanks TA Farshad!).
+
+'''
+# Elections Results
+# --------------------- 
 
 import os
 import csv
 
 # Lists to store data
 id = []
-candidates = []
+
 
 # Dictionary to store incremental votes
 candidate_dict = {}
@@ -36,12 +43,8 @@ with open(csvpath) as csvfile:
         id.append(row[0])
         # print(id)
 
-        # Put candidates in list
-        candidates.append(row[2])
-        # print(candidates)
-
         # Add candidate vote counts to dictionary value
-            # candidates is the key added to empty candidate_dict
+            # candidates (row[2]) is the key(s) added to empty candidate_dict
             # vote_count is the value(s)
         #counts the first item list as a vote
         vote_count += 1 #vote_count = vote_count +1
@@ -49,24 +52,50 @@ with open(csvpath) as csvfile:
             candidate_dict[row[2]] = 1
         else:
             candidate_dict[row[2]] += 1
-        candidate_dict["Kahn"] = 1   
         # print(candidate_dict)
               
 # Get total number of votes
 total_votes = len(id)
 # print(total_votes)
 
-# Get unique candidates and put in list
-candidate_name = list(set(candidates))
-# print(candidate_name)
+# Create empty lists for name and vote data from dictionary
+summary_candidate = []
+summary_votes = []
+winner = []
 
- # need to determine votes per candidate
-    # Is this done in a for loop? 
-    # Would a dictionary work better? Can put the list of the 4 candidates and return the 4 names as values?
-        #If using a dictionary, how do I loop row by row to tally the votes per candidate?
+# Add key and value to empty lists
+for key, value in candidate_dict.items():
+    summary_candidate.append(key)
+    # print(summary_candidate)
 
-#Use the info above to determine who won based on the most votes.    
+    # for key, value in candidate_dict.items():
+    summary_votes.append(value)
+    # print(summary_votes)
 
-#Create Summary Table
+# Find the winner
+winner = max(candidate_dict, key=candidate_dict.get)
+# print(winner)   
 
-#Export Summary Table
+# Prepare summary
+print("Election Results")
+print("-------------------------------------")
+print(summary_candidate[0] + " " + "{:.3%}".format(summary_votes[0]/total_votes) + " (" + str(summary_votes[0]) + ")")
+print(summary_candidate[1] + " " + "{:.3%}".format(summary_votes[1]/total_votes) + " (" + str(summary_votes[1]) + ")")
+print(summary_candidate[2] + " " + "{:.3%}".format(summary_votes[2]/total_votes) + " (" + str(summary_votes[2]) + ")")
+print(summary_candidate[3] + " " + "{:.3%}".format(summary_votes[3]/total_votes) + " (" + str(summary_votes[3]) + ")")
+print("-------------------------------------")
+print("Winner: " + winner)
+print("-------------------------------------")
+
+# # Export to text file
+output_text = os.path.join("analysis", "ElectionResults.txt")
+with open(output_text, "w") as textfile:
+    textfile.write("Election Results" "\n")
+    textfile.write("-------------------------------------""\n")
+    textfile.write(summary_candidate[0] + " " + "{:.3%}".format(summary_votes[0]/total_votes) + " (" + str(summary_votes[0]) + ")"  "\n")
+    textfile.write(summary_candidate[1] + " " + "{:.3%}".format(summary_votes[1]/total_votes) + " (" + str(summary_votes[1]) + ")"  "\n")
+    textfile.write(summary_candidate[2] + " " + "{:.3%}".format(summary_votes[2]/total_votes) + " (" + str(summary_votes[2]) + ")"  "\n")
+    textfile.write(summary_candidate[3] + " " + "{:.3%}".format(summary_votes[3]/total_votes) + " (" + str(summary_votes[3]) + ")"  "\n")
+    textfile.write("-------------------------------------""\n")
+    textfile.write("Winner: " + winner + "\n")
+    textfile.write("-------------------------------------")
